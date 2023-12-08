@@ -25,6 +25,17 @@ public struct LoadingIndicator: View {
             self.color = color
     }
     
+    public init(
+        animation: LoadingAnimation = .threeBalls,
+        color: Color = .primary,
+        size: CGFloat = Size.small.rawValue,
+        speed: Speed = .normal) {
+            self.animation = animation
+            self.size = size
+            self.speed = speed.rawValue
+            self.color = color
+    }
+    
     public var body: some View {
         switch animation {
         case .threeBalls: LoadingThreeBalls(color: color, size: size, speed: speed)
