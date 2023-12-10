@@ -28,10 +28,10 @@ public struct LoadingIndicator: View {
     public init(
         animation: LoadingAnimation = .threeBalls,
         color: Color = .primary,
-        size: CGFloat = Size.small.rawValue,
+        exactSize: CGFloat,
         speed: Speed = .normal) {
             self.animation = animation
-            self.size = size
+            self.size = exactSize
             self.speed = speed.rawValue
             self.color = color
     }
