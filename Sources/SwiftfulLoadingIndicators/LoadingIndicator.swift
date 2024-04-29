@@ -17,7 +17,7 @@ public struct LoadingIndicator: View {
     public init(
         animation: LoadingAnimation = .threeBalls,
         color: Color = .primary,
-        size: Size = .medium,
+        size: Size = .small,
         speed: Speed = .normal) {
             self.animation = animation
             self.size = size.rawValue
