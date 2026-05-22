@@ -1,5 +1,7 @@
 .DS_Store
 /.build
+# Xcode dumps here when invoked with `-target` (vs `-scheme`).
+/build
 /Packages
 /*.xcodeproj
 xcuserdata/
