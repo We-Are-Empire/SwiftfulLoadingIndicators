@@ -1,0 +1,12 @@
+# Skip configuration for the SwiftfulLoadingIndicators fork.
+#
+# `mode: native` + `bridging: false` — these are pure-SwiftUI value views with no
+# Kotlin-callable Swift of their own (no `#if SKIP` surface). The `skipstone`
+# plugin attached in Package.swift IS required: SkipFuseUI needs the per-View JNI
+# bridge stubs so its Android render pipeline can invoke `body` on these views —
+# without skipstone the structs construct but never render. The broad bridge
+# analyzer stays off (bridging: false) so the package's SwiftUI-rich public API
+# doesn't trip per-type bridge errors. Mirrors canonical RideUIShared / RideTheme.
+skip:
+  mode: 'native'
+  bridging: false

@@ -18,15 +18,28 @@ let package = Package(
             targets: ["SwiftfulLoadingIndicators"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        // SkipFuse + SkipFuseUI bring SwiftUI on Android: the `import SwiftUI` in these
+        // views resolves to SkipFuseUI there, which needs the `CJNI` module SkipFuse
+        // supplies. Android-only on the target below (no effect on Apple builds).
+        .package(url: "https://source.skip.tools/skip-fuse.git", from: "1.0.0"),
+        .package(url: "https://source.skip.tools/skip-fuse-ui.git", from: "1.0.0"),
+        // `skip` package — attaches the `skipstone` build-tool plugin so SkipFuseUI can
+        // generate the per-View JNI bridge stubs its Android render pipeline needs to
+        // invoke `body` on these SwiftUI views. Pinned to the SAME patched revision the
+        // rest of the Ride graph uses (must match exactly, or SwiftPM cannot resolve two
+        // revisions of one package). The plugin no-ops on Apple platforms.
+        .package(url: "https://source.skip.tools/skip.git", revision: "8254f29dba1b95af020f016b4387e8ffc92c4340"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SwiftfulLoadingIndicators",
-            dependencies: []),
+            dependencies: [
+                .product(name: "SkipFuse", package: "skip-fuse", condition: .when(platforms: [.android])),
+                .product(name: "SkipFuseUI", package: "skip-fuse-ui", condition: .when(platforms: [.android])),
+            ],
+            plugins: [.plugin(name: "skipstone", package: "skip")]),
         .testTarget(
             name: "SwiftfulLoadingIndicatorsTests",
             dependencies: ["SwiftfulLoadingIndicators"]),
