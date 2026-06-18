@@ -6,10 +6,12 @@ import PackageDescription
 let package = Package(
     name: "SwiftfulLoadingIndicators",
     platforms: [
-        // Bumped to the structured-concurrency floor: the indicator views drive their
-        // phase counters with a `.task { Task.sleep ... }` loop (Skip-Fuse Android has
-        // no Combine Timer.publish), which requires iOS 15 / macOS 12 / watchOS 8 / tvOS 15.
-        .macOS(.v12), .iOS(.v15), .tvOS(.v15), .watchOS(.v8),
+        // The attached `skipstone` plugin product requires iOS 16+; match the canonical
+        // consumers (RideUIShared = iOS 17 / watchOS 10 / macOS 14) exactly. These are
+        // well above the `.task { Task.sleep ... }` structured-concurrency floor the
+        // Combine-strip needs (Skip-Fuse Android has no Combine Timer.publish). tvOS is
+        // dropped — no consumer targets it and skipstone's tvOS floor is unspecified.
+        .iOS(.v17), .watchOS(.v10), .macOS(.v14),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
