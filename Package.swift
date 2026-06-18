@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,10 @@ import PackageDescription
 let package = Package(
     name: "SwiftfulLoadingIndicators",
     platforms: [
-        .macOS(.v11), .iOS(.v13), .tvOS(.v14), .watchOS(.v7),
+        // Bumped to the structured-concurrency floor: the indicator views drive their
+        // phase counters with a `.task { Task.sleep ... }` loop (Skip-Fuse Android has
+        // no Combine Timer.publish), which requires iOS 15 / macOS 12 / watchOS 8 / tvOS 15.
+        .macOS(.v12), .iOS(.v15), .tvOS(.v15), .watchOS(.v8),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
