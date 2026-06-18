@@ -52,8 +52,10 @@ struct LoadingCircleBars: View {
     }
 }
 
+#if !os(Android)
 struct LoadingCircleBars_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .circleBars)
     }
 }
+#endif

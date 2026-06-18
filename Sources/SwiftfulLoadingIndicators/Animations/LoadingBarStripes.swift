@@ -40,21 +40,21 @@ struct LoadingBarStripes: View {
                 .frame(height: frame.width / 3)
                 .rotationEffect(Angle(degrees: -50))
                 .offset(x: isAnimating ? frame.width : -frame.width)
-                .animation(Animation.linear(duration: timing).repeatForever(autoreverses: false))
+                .animation(Animation.linear(duration: timing).repeatForever(autoreverses: false), value: isAnimating)
 
             RoundedRectangle(cornerRadius: 25.0)
                 .fill(primaryColor)
                 .frame(height: frame.width / 3)
                 .rotationEffect(Angle(degrees: -50))
                 .offset(x: isAnimating ? frame.width : -frame.width)
-                .animation(Animation.linear(duration: timing).repeatForever(autoreverses: false).delay(timing / 3))
+                .animation(Animation.linear(duration: timing).repeatForever(autoreverses: false).delay(timing / 3), value: isAnimating)
 
             RoundedRectangle(cornerRadius: 25.0)
                 .fill(primaryColor)
                 .frame(height: frame.width / 3)
                 .rotationEffect(Angle(degrees: -50))
                 .offset(x: isAnimating ? frame.width : -frame.width)
-                .animation(Animation.linear(duration: timing).repeatForever(autoreverses: false).delay(timing / 3 * 2))
+                .animation(Animation.linear(duration: timing).repeatForever(autoreverses: false).delay(timing / 3 * 2), value: isAnimating)
 
         }
         .frame(width: frame.width, height: frame.height / 10, alignment: .center)
@@ -66,8 +66,10 @@ struct LoadingBarStripes: View {
     }
 }
 
+#if !os(Android)
 struct LoadingBarStripes_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .barStripes)
     }
 }
+#endif

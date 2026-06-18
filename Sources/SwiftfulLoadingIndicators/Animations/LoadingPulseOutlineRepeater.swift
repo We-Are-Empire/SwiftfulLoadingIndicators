@@ -34,7 +34,8 @@ struct LoadingPulseOutlineRepeater: View {
                     .animation(
                         Animation.easeOut(duration: timing)
                         .repeatForever(autoreverses: false)
-                        .delay(Double(index) * timing / Double(maxCounter) / Double(maxCounter))
+                        .delay(Double(index) * timing / Double(maxCounter) / Double(maxCounter)),
+                        value: isAnimating
                     )
             }
         }
@@ -45,8 +46,10 @@ struct LoadingPulseOutlineRepeater: View {
     }
 }
 
+#if !os(Android)
 struct LoadingPulseOutlineRepeater_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .pulseOutlineRepeater)
     }
 }
+#endif

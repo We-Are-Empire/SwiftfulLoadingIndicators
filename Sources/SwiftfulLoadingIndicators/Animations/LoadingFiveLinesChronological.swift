@@ -35,7 +35,8 @@ struct LoadingFiveLinesChronological: View {
                             .easeOut(duration: timing / 2)
                             .delay(timing)
                             .repeatForever(autoreverses: true)
-                            .delay(timing / Double(maxCounter) * Double(index + 1))
+                            .delay(timing / Double(maxCounter) * Double(index + 1)),
+                        value: isAnimating
                     )
             }
         }
@@ -46,8 +47,10 @@ struct LoadingFiveLinesChronological: View {
     }
 }
 
+#if !os(Android)
 struct LoadingFiveLinesChronological_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .fiveLinesChronological)
     }
 }
+#endif

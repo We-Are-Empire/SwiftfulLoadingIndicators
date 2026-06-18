@@ -40,17 +40,28 @@ struct LoadingText: View {
         .task {
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: UInt64(timing * 1_000_000_000))
+                // FUSE-COMPAT: SkipSwiftUI's two all-default-arg spring() overloads make a
+                // bare Animation.spring() ambiguous; pass the iOS-default response/damping
+                // explicitly on Android so behavior matches the iOS spring() default.
+                #if os(Android)
+                withAnimation(Animation.spring(response: 0.5, dampingFraction: 0.825)) {
+                    counter = counter == (maxCounter - 1) ? 0 : counter + 1
+                }
+                #else
                 withAnimation(Animation.spring()) {
                     counter = counter == (maxCounter - 1) ? 0 : counter + 1
                 }
+                #endif
             }
         }
     }
 
 }
 
+#if !os(Android)
 struct LoadingText_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .text)
     }
 }
+#endif

@@ -49,8 +49,10 @@ public struct LoadingShowcaseView: View {
     }
 }
 
+#if !os(Android)
 struct LoadingShowcaseView_Previews: PreviewProvider {
     static var previews: some View {
         LoadingShowcaseView()
     }
 }
+#endif

@@ -45,8 +45,10 @@ struct LoadingThreeBallsBouncing: View {
     }
 }
 
+#if !os(Android)
 struct LoadingThreeBallsBouncing_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .threeBallsBouncing)
     }
 }
+#endif

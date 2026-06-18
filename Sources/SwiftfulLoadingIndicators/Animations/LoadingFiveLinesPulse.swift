@@ -52,8 +52,10 @@ struct LoadingFiveLinesPulse: View {
     }
 }
 
+#if !os(Android)
 struct LoadingFiveLinesPulse_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .fiveLinesPulse)
     }
 }
+#endif

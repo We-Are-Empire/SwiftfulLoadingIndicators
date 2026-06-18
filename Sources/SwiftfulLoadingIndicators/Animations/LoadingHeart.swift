@@ -26,9 +26,9 @@ struct LoadingHeart: View {
             .font(.system(size: frame.height * 0.9))
             .foregroundColor(primaryColor)
             .scaleEffect(isAnimating ? 1.0 : 0.3)
-            .animation(Animation.easeInOut(duration: timing).repeatForever(autoreverses: true))
+            .animation(Animation.easeInOut(duration: timing).repeatForever(autoreverses: true), value: isAnimating)
             .rotationEffect(Angle(degrees: isAnimating ? 360 : 0))
-            .animation(Animation.easeInOut(duration: timing * 2).repeatForever(autoreverses: false))
+            .animation(Animation.easeInOut(duration: timing * 2).repeatForever(autoreverses: false), value: isAnimating)
             .frame(width: frame.width, height: frame.height, alignment: .center)
             .onAppear {
                 isAnimating.toggle()
@@ -36,8 +36,10 @@ struct LoadingHeart: View {
     }
 }
 
+#if !os(Android)
 struct LoadingHeart_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .heart)
     }
 }
+#endif

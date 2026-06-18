@@ -50,8 +50,10 @@ struct LoadingCircleTrim: View {
     }
 }
 
+#if !os(Android)
 struct LoadingCircleTrim_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .circleTrim)
     }
 }
+#endif

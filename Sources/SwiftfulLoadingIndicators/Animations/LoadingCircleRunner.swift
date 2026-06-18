@@ -29,11 +29,11 @@ struct LoadingCircleRunner: View {
                         isAnimating ? frame.height / 10 : frame.height / 20,
                                        lineCap: .round, lineJoin: .round)
             )
-            .animation(Animation.easeInOut(duration: timing / 2).repeatForever())
+            .animation(Animation.easeInOut(duration: timing / 2).repeatForever(), value: isAnimating)
             .rotationEffect(
                 Angle(degrees: isAnimating ? 360 : 0)
             )
-            .animation(Animation.linear(duration: timing).repeatForever(autoreverses: false))
+            .animation(Animation.linear(duration: timing).repeatForever(autoreverses: false), value: isAnimating)
             .frame(width: frame.width, height: frame.height, alignment: .center)
             .rotationEffect(Angle(degrees: 360 * 0.15))
             .onAppear {
@@ -42,8 +42,10 @@ struct LoadingCircleRunner: View {
     }
 }
 
+#if !os(Android)
 struct LoadingCircleRunner_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .circleRunner)
     }
 }
+#endif

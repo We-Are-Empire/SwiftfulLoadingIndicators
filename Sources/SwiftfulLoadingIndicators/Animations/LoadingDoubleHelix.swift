@@ -34,11 +34,12 @@ struct LoadingDoubleHelix: View {
                             Animation
                                 .easeInOut(duration: timing)
                                 .repeatForever(autoreverses: true)
-                                .delay(timing / Double(maxCounter) * Double(index))
+                                .delay(timing / Double(maxCounter) * Double(index)),
+                            value: isAnimating
                         )
                         .scaleEffect(isAnimating ? 1.0 : 0.8)
                         .opacity(isAnimating ? 1.0 : 0.8)
-                        .animation(Animation.easeInOut(duration: timing).repeatForever(autoreverses: true))
+                        .animation(Animation.easeInOut(duration: timing).repeatForever(autoreverses: true), value: isAnimating)
 
                 }
             }
@@ -53,11 +54,12 @@ struct LoadingDoubleHelix: View {
                             Animation
                                 .easeInOut(duration: timing)
                                 .repeatForever(autoreverses: true)
-                                .delay(timing / Double(maxCounter) * Double(index))
+                                .delay(timing / Double(maxCounter) * Double(index)),
+                            value: isAnimating
                         )
                         .scaleEffect(isAnimating ? 0.8 : 1.0)
                         .opacity(isAnimating ? 0.8 : 1.0)
-                        .animation(Animation.easeInOut(duration: timing).repeatForever(autoreverses: true))
+                        .animation(Animation.easeInOut(duration: timing).repeatForever(autoreverses: true), value: isAnimating)
 
                 }
             }
@@ -70,8 +72,10 @@ struct LoadingDoubleHelix: View {
     }
 }
 
+#if !os(Android)
 struct LoadingDoubleHelix_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .doubleHelix)
     }
 }
+#endif

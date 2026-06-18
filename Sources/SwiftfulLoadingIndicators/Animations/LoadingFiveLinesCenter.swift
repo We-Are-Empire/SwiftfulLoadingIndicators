@@ -38,7 +38,8 @@ struct LoadingFiveLinesCenter: View {
                                 index == 2 ? 0.0 :
                                 (index == 1 || index == 3) ? timing / 3 :
                                 timing / 3 * 2
-                            )
+                            ),
+                        value: isAnimating
                     )
             }
         }
@@ -50,8 +51,10 @@ struct LoadingFiveLinesCenter: View {
 }
 
 
+#if !os(Android)
 struct LoadingFiveLinesCenter_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .fiveLinesCenter)
     }
 }
+#endif

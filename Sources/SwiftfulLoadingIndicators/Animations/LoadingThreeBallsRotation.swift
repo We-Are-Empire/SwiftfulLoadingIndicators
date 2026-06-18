@@ -40,8 +40,10 @@ struct LoadingThreeBallsRotation: View {
     }
 }
 
+#if !os(Android)
 struct LoadingThreeBallsRotation_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .threeBallsRotation)
     }
 }
+#endif

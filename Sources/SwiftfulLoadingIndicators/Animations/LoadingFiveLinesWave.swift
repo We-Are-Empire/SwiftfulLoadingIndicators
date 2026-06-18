@@ -33,7 +33,8 @@ struct LoadingFiveLinesWave: View {
                         Animation
                             .easeOut(duration: timing)
                             .repeatForever(autoreverses: true)
-                            .delay(timing / Double(maxCounter) * Double(index))
+                            .delay(timing / Double(maxCounter) * Double(index)),
+                        value: isAnimating
                     )
             }
         }
@@ -44,8 +45,10 @@ struct LoadingFiveLinesWave: View {
     }
 }
 
+#if !os(Android)
 struct LoadingFiveLinesWave_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .fiveLinesWave)
     }
 }
+#endif

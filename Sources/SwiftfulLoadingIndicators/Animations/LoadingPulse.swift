@@ -33,7 +33,8 @@ struct LoadingPulse: View {
                     .animation(
                         Animation.easeOut(duration: timing)
                         .repeatForever(autoreverses: false)
-                        .delay(Double(index) * timing / 3)
+                        .delay(Double(index) * timing / 3),
+                        value: isAnimating
                     )
 
             }
@@ -45,8 +46,10 @@ struct LoadingPulse: View {
     }
 }
 
+#if !os(Android)
 struct LoadingPulse_Previews: PreviewProvider {
     static var previews: some View {
         LoadingPreviewView(animation: .pulse)
     }
 }
+#endif
