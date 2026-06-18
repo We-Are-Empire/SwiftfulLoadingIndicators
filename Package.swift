@@ -38,8 +38,15 @@ let package = Package(
         .target(
             name: "SwiftfulLoadingIndicators",
             dependencies: [
-                .product(name: "SkipFuse", package: "skip-fuse", condition: .when(platforms: [.android])),
-                .product(name: "SkipFuseUI", package: "skip-fuse-ui", condition: .when(platforms: [.android])),
+                // Unconditional (NOT Android-gated): for a URL/revision dependency, skipstone's
+                // host-side gradle generation only treats the package as a full Skip-Fuse module
+                // when the SkipFuse edge is visible at host manifest-eval time. An Android-only
+                // condition hides it on the host → skipstone emits a stub gradle module
+                // (`android {}` with no android-library plugin → "Unresolved reference 'android'").
+                // Matches the sibling URL-dep forks SwiftUIToast / SwiftySensors. SkipFuse/UI no-op
+                // on Apple platforms, so this is inert for the iOS/macOS builds.
+                .product(name: "SkipFuse", package: "skip-fuse"),
+                .product(name: "SkipFuseUI", package: "skip-fuse-ui"),
             ],
             plugins: [.plugin(name: "skipstone", package: "skip")]),
         .testTarget(
