@@ -27,10 +27,10 @@ let package = Package(
         .package(url: "https://source.skip.tools/skip-fuse-ui.git", from: "1.0.0"),
         // `skip` package — attaches the `skipstone` build-tool plugin so SkipFuseUI can
         // generate the per-View JNI bridge stubs its Android render pipeline needs to
-        // invoke `body` on these SwiftUI views. Pinned to the SAME patched revision the
-        // rest of the Ride graph uses (must match exactly, or SwiftPM cannot resolve two
-        // revisions of one package). The plugin no-ops on Apple platforms.
-        .package(url: "https://source.skip.tools/skip.git", revision: "8254f29dba1b95af020f016b4387e8ffc92c4340"),
+        // invoke `body` on these SwiftUI views. The plugin no-ops on Apple platforms.
+        // Version range, not a revision pin: the ride `skip` fork is retired and
+        // ranges unify natively, so this needs no lockstep bump with the Ride graph.
+        .package(url: "https://source.skip.tools/skip.git", from: "1.9.5"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
