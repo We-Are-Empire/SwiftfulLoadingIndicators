@@ -32,7 +32,10 @@ struct LoadingCircleRunner: View {
         // trim pulse and the rotation from a Task-sleep loop instead — the pattern the
         // already-working indicators use (e.g. LoadingThreeBalls). Increment `rotation`
         // each cycle so the spin is continuous, and toggle `isAnimating` each half-cycle
-        // for the stroke-width/trim pulse.
+        // for the stroke-width/trim pulse. The animations ride on the view
+        // (`.animation(_:value:)`), not `withAnimation`: SkipUI applies a
+        // `withAnimation` to every view that recomposes in that frame, so a spinner
+        // left mounted stretched unrelated fades to its 2 s rotation.
         Circle()
             .trim(from: isAnimating ? 0.9 : 0.8, to: 1.0)
             .stroke(primaryColor,
@@ -40,15 +43,17 @@ struct LoadingCircleRunner: View {
                         isAnimating ? frame.height / 10 : frame.height / 20,
                                        lineCap: .round, lineJoin: .round)
             )
+            .animation(.easeInOut(duration: timing / 2), value: isAnimating)
             .rotationEffect(Angle(degrees: rotation))
+            .animation(.linear(duration: timing), value: rotation)
             .frame(width: frame.width, height: frame.height, alignment: .center)
             .rotationEffect(Angle(degrees: 360 * 0.15))
             .task {
                 while !Task.isCancelled {
-                    withAnimation(.linear(duration: timing)) { rotation += 360 }
-                    withAnimation(.easeInOut(duration: timing / 2)) { isAnimating = true }
+                    rotation += 360
+                    isAnimating = true
                     try? await Task.sleep(nanoseconds: UInt64(timing / 2 * 1_000_000_000))
-                    withAnimation(.easeInOut(duration: timing / 2)) { isAnimating = false }
+                    isAnimating = false
                     try? await Task.sleep(nanoseconds: UInt64(timing / 2 * 1_000_000_000))
                 }
             }
